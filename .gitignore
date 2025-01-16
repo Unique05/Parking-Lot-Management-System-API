@@ -1,6 +1,5 @@
 HELP.md
 target/
-**/src/main/**/Dto/
 **/src/main/**/Config/
 **/src/main/**/application.properties/
 !.mvn/wrapper/maven-wrapper.jar
