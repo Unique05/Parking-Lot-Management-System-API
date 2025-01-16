@@ -1,5 +1,7 @@
 package com.unique05.ParkingLotManagementSystemRestApi.Service;
 
+import com.unique05.ParkingLotManagementSystemRestApi.Dto.ParkingSpotDto;
+import com.unique05.ParkingLotManagementSystemRestApi.Dto.ParkingSpotDtoMapper;
 import com.unique05.ParkingLotManagementSystemRestApi.Entity.ParkingSpots;
 import com.unique05.ParkingLotManagementSystemRestApi.Entity.TypeOfCar;
 import com.unique05.ParkingLotManagementSystemRestApi.Repository.ParkingLotRepository;
@@ -7,14 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ParkingLotService {
     @Autowired
     private final ParkingLotRepository repository;
+    private final ParkingSpotDtoMapper parkingSpotDtoMapper;
 
-    public ParkingLotService(ParkingLotRepository repository) {
+    public ParkingLotService(ParkingLotRepository repository, ParkingSpotDtoMapper parkingSpotDtoMapper) {
         this.repository = repository;
+        this.parkingSpotDtoMapper = parkingSpotDtoMapper;
     }
 
     public ParkingSpots saveSpot(ParkingSpots parkingSpot){
@@ -25,12 +30,17 @@ public class ParkingLotService {
         return repository.saveAll(parkingSpots);
     }
 
-    public List<ParkingSpots> displaySpots(){
-        return repository.findAll();
+    public List<ParkingSpotDto> displaySpots(){
+        return repository.findAll()
+                .stream()
+                .map(parkingSpotDtoMapper)
+                .collect(Collectors.toList());
     }
 
-    public ParkingSpots displaySpotById(int parkingSpotId){
-        return repository.findById(parkingSpotId).orElse(null);
+    public ParkingSpotDto displaySpotById(int parkingSpotId){
+        return repository.findById(parkingSpotId)
+                .map(parkingSpotDtoMapper)
+                .orElse(null);
     }
 
     public List<ParkingSpots> displaySpotsByType(TypeOfCar TypeOfCar){

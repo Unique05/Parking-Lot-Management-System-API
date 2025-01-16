@@ -1,5 +1,6 @@
 package com.unique05.ParkingLotManagementSystemRestApi.Controller;
 
+import com.unique05.ParkingLotManagementSystemRestApi.Dto.ParkingSpotDto;
 import com.unique05.ParkingLotManagementSystemRestApi.Entity.ParkingSpots;
 import com.unique05.ParkingLotManagementSystemRestApi.Entity.TypeOfCar;
 import com.unique05.ParkingLotManagementSystemRestApi.Service.ParkingLotService;
@@ -26,12 +27,12 @@ public class ParkingLotController {
      }
 
      @GetMapping("/displaySpots")
-    public List<ParkingSpots> findAllSpots(){
+    public List<ParkingSpotDto> findAllSpots(){
          return service.displaySpots();
      }
 
     @GetMapping("/displaySpotById/{parkingSpotId}")
-    public ParkingSpots findById(@PathVariable int parkingSpotId) {
+    public ParkingSpotDto findById(@PathVariable int parkingSpotId) {
          return service.displaySpotById(parkingSpotId);}
 
     @GetMapping("/displaySpotByPlateNumber/{carPlateNumber}")
